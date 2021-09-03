@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather app</title>
+    <link rel="stylesheet" href="styles.css">
+     
+</head>
+<body>
+    
+    <div class="container">
+        <input type="text" placeholder="enter a city.." id="input-btn">
+        <button id="submit-btn">submit</button>
+        <h3 id="city">andhra pradesh</h3>
+        <p><span id="temp">32.07</span>&deg;C</p>
+        <h4 id="des">description</h4>
+    </div>
+    <script>
+        let btn = document.getElementById('submit-btn');
+        btn.addEventListener("click", function(){
+            let inputbtn = document.getElementById("input-btn").value;
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+inputbtn+'&appid=04362d5f26df4efe73c8790bbd2c4f89')
+            .then(Response => Response.json())
+            .then(data => {
+                let cityname = data.name;
+                let tem = data.main.temp;
+                let temp = tem - 273.15;
+                let description = data.weather[0].description;
+
+                document.getElementById('city').innerText = cityname;
+                document.getElementById('temp').innerText = temp.toFixed(2);
+                document.getElementById('des').innerText = description;
+            })
+            .catch(res => alert("please type right city name"))
+        })
+    </script>
+</body>
+
+</html>
